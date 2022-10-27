@@ -2,13 +2,47 @@
 using namespace std;
 
 // definicao de tipo
-struct NO {
+class No
+{
+private:
+	No *esq, *dir;
 	int valor;
-	NO* esq;
-	NO* dir;
-};
 
 NO* raiz = NULL;
+
+public:
+	No(int chave)
+	{
+		this->chave = chave;
+		esq = NULL;
+		dir = NULL;
+	}
+
+	int getChave()
+	{
+		return chave;
+	}
+
+	No* getEsq()
+	{
+		return esq;
+	}
+
+	No* getDir()
+	{
+		return dir;
+	}
+
+	void setEsq(No *no)
+	{
+		esq = no;
+	}
+
+	void setDir(No *no)
+	{
+		dir = no;
+	}
+};
 
 // headers
 // estrutura principal
@@ -71,7 +105,7 @@ void menu()
 void inicializar()
 {
 
-	// provisÛrio porque n„o libera a memoria usada pela arvore
+	// provis√≥rio porque n√£o libera a memoria usada pela arvore
 	NO* raiz = NULL;
 	
 	cout << "Arvore inicializada \n";
@@ -121,7 +155,30 @@ NO* criaNO(int valor)
 
 NO* insereArvore(NO* no, int valor)
 {
+	if(valor < no->getChave())
+		{
 	
+			if(no->getEsq() == NULL)
+			{
+				No *novo_no = new No(valor);
+				no->setEsq(novo_no); 
+			}
+			else
+			{
+				NO* insereArvore(no->getEsq(), valor);
+			}
+		}
+		else if(valor > no->getChave())
+		{
+			if(no->getDir() == NULL)
+			{
+				No *novo_no = new No(valor);
+				no->setDir(novo_no);
+			}
+			else
+			{
+				NO* insereArvore(no->getDir(), valor);
+			}
 }
 
 int elementosArvore(NO* no)
@@ -135,5 +192,27 @@ int elementosArvore(NO* no)
 
 void exibirElementosArvore(NO* no)
 {
-	
+	 aux = raiz;
+                     topo = NULL;
+
+                     do {
+
+                          while(aux != NULL) {
+
+                                aux_pilha = new pilha();
+                                aux_pilha -> num = aux;                 
+                                aux_pilha -> prox = topo;
+                                topo = aux_pilha;
+                                aux = aux -> esq;
+                            }
+
+                          if(topo != NULL) {
+                                aux_pilha = topo;
+                                cout << aux_pilha -> num -> x << " ";
+                                aux = topo -> num -> dir;
+                                topo = topo -> prox;
+                             }
+                     } while(topo != NULL or aux != NULL);
+               }    
+            cout << endl;
 }
